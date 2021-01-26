@@ -51,7 +51,6 @@ class MyGameController(controller.Controller):
         self.custom_dict["asztal"] = []
         self.custom_dict["oszlop"] = []
         self.custom_dict["purgatory"] = osztalyok.Purgatory()
-        #self.custom_dict["purgatory"] = card_holder.CardsHolder(atlapos,atlapoffset,enums.GrabPolicy.can_single_grab)
         self.custom_dict["kez"] = osztalyok.Kez((0, 0), asztal_inner_offset)
         self.custom_dict["elozmeny"] = None
         
@@ -73,7 +72,6 @@ class MyGameController(controller.Controller):
 
         self.add_rendered_object(self.custom_dict["talon"])
         self.add_rendered_object(self.custom_dict["atlapoz"])
-        #self.add_rendered_object(self.custom_dict["asztal"])
         self.add_rendered_object(self.custom_dict["purgatory"])
         self.add_rendered_object(self.custom_dict["kez"])
 
@@ -128,14 +126,12 @@ class MyGameController(controller.Controller):
                 asztalcount = 0
                 if len(self.custom_dict["kez"].cards) == 0:
                     for asztal in self.custom_dict["asztal"]:
-                        #if asztal.pos[0] <= mpos[0] <= asztal.pos[0] + 130 and asztal.pos[1] + (asztalcount * 20) <= mpos[1] <= asztal.pos[1] + 170 + (asztalcount * 20):
                         kartyak = asztal.try_grab_card(pos)
                         if kartyak is not None:
                             for kartya_ in kartyak:
                                 self.custom_dict["kez"].add_card(kartya_)
                             self.custom_dict["elozmeny"] = asztal
                             break
-                        #asztalcount += 1
 
                 
         
@@ -145,11 +141,8 @@ class MyGameController(controller.Controller):
 
             if len(self.custom_dict["kez"].cards) == 0:
                 if (220 <= mpos[1] <= 510) and (18 <= mpos[0] <= 1228):
-                        #print("seggek a faszban")
                         for asztal in self.custom_dict["asztal"]:
-                            #print("seggek a faszban")
                             if asztal.pos[0] <= mpos[0] <= asztal.pos[0] + 130 and asztal.pos[1] + (asztalcount * 20) <= mpos[1] <= asztal.pos[1] + 170 + (asztalcount * 20): 
-                                print("seggek a faszban")
                                 kartya_ = asztal.try_grab_card(mpos) 
                                 if kartya_ == None:
                                     try:
@@ -161,16 +154,11 @@ class MyGameController(controller.Controller):
 
             elif len(self.custom_dict["kez"].cards) != 0:                
                 if (220 <= mpos[1] <= 510) and (18 <= mpos[0] <= 1228):
-                    print("a teruletcheck jo")
                     for asztal in self.custom_dict["asztal"]:
                         if asztal.pos[0] <= mpos[0] <= asztal.pos[0] + 130 + (asztalcount * 20) and asztal.pos[1] + (asztalcount * 20) <= mpos[1] <= asztal.pos[1] + 170 + (asztalcount * 20): 
-                            print("az asztalposcheck jo")
-                            #print("ezt nezd: ".join(str(asztal.cards[-1].back_up)))
                             if asztal.fogadkartyat(self.custom_dict["kez"].cards[0]) == True:
-                                print("a checkcollide es fogadkartyat check jo")
                                 while len(self.custom_dict["kez"].cards) != 0:
                                     asztal.add_card(self.custom_dict["kez"].pop_bottom_card())
-                            #print(asztal.cards[-1].back_up)
 
                             
                         asztalcount += 1
@@ -179,13 +167,7 @@ class MyGameController(controller.Controller):
                 else:
                     for oszlop in self.custom_dict["oszlop"]:
                         if oszlop.pos[0] <= mpos[0] <= oszlop.pos[0] + 200 and 0 <= mpos[1] <= oszlop.pos[1] + 170:
-                            print("oszlopcheck jo")
-                            print(oszlop.fogadkartyat(self.custom_dict["kez"].cards[0]))
-                            print(oszlop.check_collide(self.custom_dict["kez"].cards[0]))
                             if ((oszlop.fogadkartyat(self.custom_dict["kez"].cards[0]) == True) and (oszlop.check_collide(self.custom_dict["kez"].cards[0]) == True)):
-                                print("fogadkartyat cseck")
-                                print(oszlop.fogadkartyat(self.custom_dict["kez"].cards[0]))
-                                print(oszlop.check_collide(self.custom_dict["kez"].cards[0]))
                                 oszlop.add_card(self.custom_dict["kez"].pop_card(False))
                                 
 
