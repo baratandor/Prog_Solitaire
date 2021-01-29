@@ -237,7 +237,6 @@ class MyGameController(controller.Controller):
             Add destruction of all objects, storing of game progress to a file etc. to this method.
         """
         pygame.quit()
-        exit()
         pass
 
 
